@@ -8,7 +8,7 @@ interface Props {
 // 底部「联系人 / 我的」双 Tab 布局，移动端竖版居中
 export default function TabLayout({ children }: Props) {
   return (
-    <div className="flex min-h-[100dvh] w-full justify-center bg-muted">
+    <div className="flex h-[100dvh] w-full justify-center bg-muted">
       <div className="relative flex h-[100dvh] w-full max-w-[480px] flex-col overflow-hidden bg-background shadow-sm">
         <div className="feed-scroll flex-1 overflow-y-auto">{children}</div>
         <nav className="flex shrink-0 border-t border-border bg-card pb-[env(safe-area-inset-bottom)]">

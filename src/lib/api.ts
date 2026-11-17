@@ -183,10 +183,11 @@ export async function addMessage(
     slot_id?: string | null;
     version?: number;
     is_current?: boolean;
+    id?: string;
   },
 ): Promise<Message | null> {
   const m: Message = {
-    id: uid(),
+    id: msg.id ?? uid(),
     contact_id: contactId,
     side: msg.side,
     type: msg.type,

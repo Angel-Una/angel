@@ -25,6 +25,7 @@ import {
 import { uploadImage } from "@/lib/upload";
 import { showSystemNotify, notifyPermission } from "@/lib/keepalive";
 import { formatChatTime } from "@/lib/format";
+import { uid } from "@/db/local";
 import type { Contact, Message, Profile, ChatSetting } from "@/types/types";
 
 const TIME_GAP = 5 * 60 * 1000;
@@ -58,11 +59,16 @@ export default function ChatPage() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [setting, setSetting] = useState<ChatSetting | null>(null);
-  const [loading, setLoading] = useState(true);
   const [thinking, setThinking] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const feedRef = useRef<HTMLDivElement>(null);
+
+  // 只滚动消息容器本身，绝不触发页面/父级滚动
+  const scrollToBottom = useCallback(() => {
+    const el = feedRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, []);
 
   const load = async () => {
     if (!contactId) return;
@@ -76,16 +82,16 @@ export default function ChatPage() {
     setProfile(p);
     setMessages(msgs);
     setSetting(cfg);
-    setLoading(false);
   };
   useEffect(() => {
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contactId]);
 
+  // 仅在消息数量变化时滚动到底部，不随 thinking 变化重复滚动
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "auto" });
-  }, [messages.length, thinking]);
+    scrollToBottom();
+  }, [messages.length, scrollToBottom]);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -186,9 +192,10 @@ export default function ChatPage() {
 
   const sendText = async (text: string) => {
     if (!contactId) return;
-    const tempId = `tmp-${Date.now()}`;
+    const msgId = uid();
+    const createdAt = new Date().toISOString();
     const optimistic: Message = {
-      id: tempId,
+      id: msgId,
       contact_id: contactId,
       side: "me",
       type: "text",
@@ -197,17 +204,16 @@ export default function ChatPage() {
       slot_id: null,
       version: 1,
       is_current: true,
-      created_at: new Date().toISOString(),
+      created_at: createdAt,
     };
-    const next = [...messages, optimistic];
-    setMessages(next);
+    setMessages((prev) => [...prev, optimistic]);
     try {
-      const m = await addMessage(contactId, { side: "me", type: "text", content: text });
-      if (m) setMessages((prev) => prev.map((x) => (x.id === tempId ? m : x)));
-      triggerAI(next);
+      // 复用同一个 id，避免乐观消息被替换时 React 卸载重渲染造成闪烁
+      await addMessage(contactId, { side: "me", type: "text", content: text, id: msgId });
+      triggerAI([...messages, optimistic]);
     } catch {
       toast.error("发送失败");
-      setMessages((prev) => prev.filter((x) => x.id !== tempId));
+      setMessages((prev) => prev.filter((x) => x.id !== msgId));
     }
   };
 
@@ -259,14 +265,6 @@ export default function ChatPage() {
     navigate("/");
   };
 
-  if (loading) {
-    return (
-      <div className="flex h-[100dvh] items-center justify-center bg-background text-muted-foreground">
-        加载中…
-      </div>
-    );
-  }
-
   if (!contact) {
     return (
       <div className="flex h-[100dvh] flex-col items-center justify-center gap-3 bg-background">
@@ -301,7 +299,7 @@ export default function ChatPage() {
             : undefined
         }
       >
-        <div className="feed-scroll absolute inset-0 overflow-y-auto">
+        <div ref={feedRef} className="feed-scroll absolute inset-0 overflow-y-auto">
           <div id="messages" className="space-y-4 px-3 py-4">
             {messages.length === 0 ? (
               <p className="py-10 text-center text-sm text-muted-foreground">还没有消息，打个招呼吧～</p>
@@ -333,7 +331,6 @@ export default function ChatPage() {
                 );
               })
             )}
-            <div ref={bottomRef} />
           </div>
         </div>
       </div>
