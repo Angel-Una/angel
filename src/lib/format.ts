@@ -1,4 +1,4 @@
-// 时间格式化（Supabase 存 UTC，展示转本地时区）
+// 时间格式化（本地存 UTC ISO 字符串，展示转本地时区）
 
 function pad(n: number): string {
   return String(n).padStart(2, "0");

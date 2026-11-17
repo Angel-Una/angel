@@ -1,4 +1,4 @@
-// 数据模型类型，与 Supabase schema 对应
+// 数据模型类型（与浏览器本地存储结构对应）
 
 export interface Profile {
   id: string;
