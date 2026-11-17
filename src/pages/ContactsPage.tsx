@@ -103,7 +103,36 @@ export default function ContactsPage() {
     <TabLayout>
       <PageMeta title="联系人" description="会话列表" />
       <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b border-border bg-card px-4">
-        <h1 className="text-base font-semibold text-foreground">微信</h1>
+        <h1 className="flex items-center gap-2 text-base font-semibold text-foreground">
+          <span className="inline-flex h-6 w-6 items-center justify-center overflow-hidden rounded-md">
+            <svg viewBox="0 0 512 512" className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="nx-bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#6366F1"/>
+                  <stop offset="0.5" stopColor="#A855F7"/>
+                  <stop offset="1" stopColor="#EC4899"/>
+                </linearGradient>
+                <linearGradient id="nx-heart" x1="128" y1="80" x2="384" y2="440" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#FBCFE8"/>
+                  <stop offset="1" stopColor="#F472B6"/>
+                </linearGradient>
+              </defs>
+              <rect width="512" height="512" rx="112" fill="url(#nx-bg)"/>
+              <path d="M256 432 C 110 328, 40 252, 40 168 C 40 112, 88 72, 148 72 C 188 72, 226 94, 256 128 C 286 94, 324 72, 364 72 C 424 72, 472 112, 472 168 C 472 252, 402 328, 256 432 Z" fill="url(#nx-heart)" fillOpacity="0.95"/>
+              <g stroke="#FFFFFF" strokeOpacity="0.6" strokeWidth="18" strokeLinecap="round">
+                <line x1="180" y1="200" x2="256" y2="256"/>
+                <line x1="332" y1="200" x2="256" y2="256"/>
+                <line x1="256" y1="256" x2="256" y2="344"/>
+              </g>
+              <g fill="#FFFFFF">
+                <circle cx="180" cy="200" r="22"/>
+                <circle cx="332" cy="200" r="22"/>
+                <circle cx="256" cy="256" r="30"/>
+              </g>
+            </svg>
+          </span>
+          Nexus
+        </h1>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button aria-label="新建" className="flex h-9 w-9 items-center justify-center text-foreground">
