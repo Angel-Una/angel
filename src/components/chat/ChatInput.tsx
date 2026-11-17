@@ -43,7 +43,7 @@ export default function ChatInput({ onSendText, onPickImage }: Props) {
               if (e.key === "Enter") send();
             }}
             placeholder="发送消息…"
-            className="w-full bg-transparent px-2 text-left text-[15px] text-foreground outline-none placeholder:text-muted-foreground"
+            className="w-full bg-transparent px-2 text-left text-base text-foreground outline-none placeholder:text-muted-foreground"
           />
         </div>
         <input

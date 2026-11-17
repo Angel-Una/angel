@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import IntersectObserver from '@/components/common/IntersectObserver';
 import ProactiveScheduler from '@/components/chat/ProactiveScheduler';
+import KeepaliveManager from '@/components/KeepaliveManager';
 import { Toaster } from '@/components/ui/sonner';
 
 import { routes } from './routes';
@@ -14,6 +15,7 @@ const App: React.FC = () => {
     <Router>
       {/*<AuthProvider>*/}
       {/*<RouteGuard>*/}
+      <KeepaliveManager />
       <IntersectObserver />
       <ProactiveScheduler />
       <div className="flex flex-col min-h-screen">

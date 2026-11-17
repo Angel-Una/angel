@@ -22,7 +22,6 @@ import { uploadImage } from "@/lib/upload";
 import {
   startKeepalive,
   stopKeepalive,
-  initKeepaliveVisibility,
   notifySupported,
   requestNotifyPermission,
   showSystemNotify,
@@ -71,18 +70,15 @@ export default function MePage() {
     loadAll();
   }, []);
 
-  // 保活：页面回前台自动恢复 + 运行时长计时；卸载时停止
+  // 保活：仅维护运行时长计时；保活启停已由全局 KeepaliveManager 接管，切换页面不再中断
   useEffect(() => {
-    const cleanup = initKeepaliveVisibility(() => keepaliveRef.current);
     const timer = window.setInterval(() => {
       if (keepaliveRef.current && startRef.current) {
         setUptimeSec(Math.floor((Date.now() - startRef.current) / 1000));
       }
     }, 1000);
     return () => {
-      cleanup();
       window.clearInterval(timer);
-      stopKeepalive();
     };
   }, []);
 
@@ -197,7 +193,7 @@ export default function MePage() {
 
   return (
     <TabLayout>
-      <PageMeta title="我的" description="个人设置" />
+      <PageMeta title="Nexus" description="个人设置" />
       <header className="sticky top-0 z-10 flex h-14 items-center justify-center border-b border-border bg-card px-4">
         <h1 className="text-base font-semibold text-foreground">我的</h1>
       </header>

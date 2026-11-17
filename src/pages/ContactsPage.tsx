@@ -101,33 +101,37 @@ export default function ContactsPage() {
 
   return (
     <TabLayout>
-      <PageMeta title="联系人" description="会话列表" />
+      <PageMeta title="Nexus" description="AI 聊天助手" />
       <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b border-border bg-card px-4">
         <h1 className="flex items-center gap-2 text-base font-semibold text-foreground">
           <span className="inline-flex h-6 w-6 items-center justify-center overflow-hidden rounded-md">
             <svg viewBox="0 0 512 512" className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="nx-bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
-                  <stop offset="0" stopColor="#6366F1"/>
-                  <stop offset="0.5" stopColor="#A855F7"/>
-                  <stop offset="1" stopColor="#EC4899"/>
-                </linearGradient>
-                <linearGradient id="nx-heart" x1="128" y1="80" x2="384" y2="440" gradientUnits="userSpaceOnUse">
-                  <stop offset="0" stopColor="#FBCFE8"/>
-                  <stop offset="1" stopColor="#F472B6"/>
+                  <stop offset="0" stopColor="#FFF6F8"/>
+                  <stop offset="1" stopColor="#FCEEF1"/>
                 </linearGradient>
               </defs>
               <rect width="512" height="512" rx="112" fill="url(#nx-bg)"/>
-              <path d="M256 432 C 110 328, 40 252, 40 168 C 40 112, 88 72, 148 72 C 188 72, 226 94, 256 128 C 286 94, 324 72, 364 72 C 424 72, 472 112, 472 168 C 472 252, 402 328, 256 432 Z" fill="url(#nx-heart)" fillOpacity="0.95"/>
-              <g stroke="#FFFFFF" strokeOpacity="0.6" strokeWidth="18" strokeLinecap="round">
-                <line x1="180" y1="200" x2="256" y2="256"/>
-                <line x1="332" y1="200" x2="256" y2="256"/>
-                <line x1="256" y1="256" x2="256" y2="344"/>
+              <path d="M 256 412 C 130 322, 64 258, 64 184 C 64 138, 100 104, 142 104 C 178 104, 214 124, 256 160 L 256 412 Z"
+                    fill="none" stroke="#F4A0A0" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+              <g stroke="#E8A0B0" stroke-width="22" stroke-linecap="round">
+                <line x1="256" y1="160" x2="320" y2="128"/>
+                <line x1="320" y1="128" x2="384" y2="104"/>
+                <line x1="384" y1="104" x2="448" y2="138"/>
+                <line x1="448" y1="138" x2="448" y2="184"/>
+                <line x1="448" y1="184" x2="420" y2="248"/>
+                <line x1="420" y1="248" x2="360" y2="312"/>
+                <line x1="360" y1="312" x2="296" y2="372"/>
+                <line x1="296" y1="372" x2="256" y2="412"/>
               </g>
-              <g fill="#FFFFFF">
-                <circle cx="180" cy="200" r="22"/>
-                <circle cx="332" cy="200" r="22"/>
-                <circle cx="256" cy="256" r="30"/>
+              <g fill="#F0A8B8">
+                <circle cx="256" cy="160" r="20"/>
+                <circle cx="320" cy="128" r="18"/>
+                <circle cx="384" cy="104" r="18"/>
+                <circle cx="448" cy="138" r="18"/>
+                <circle cx="448" cy="184" r="18"/>
+                <circle cx="256" cy="412" r="20"/>
               </g>
             </svg>
           </span>
